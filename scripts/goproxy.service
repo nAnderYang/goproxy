@@ -4,10 +4,13 @@ Documentation=https://goproxy.io
 After=network-online.target
 
 [Service]
+Type=simple
 User=root
 Group=root
 LimitNOFILE=65536
-ExecStart=goproxy -listen=0.0.0.0:80
+EnvironmentFile=goproxy.conf
+ExecStart=goproxy $OPTION
+ExecStop=/bin/kill -HUP $MAINPID
 KillMode=control-group
 SuccessExitStatus=2
 
